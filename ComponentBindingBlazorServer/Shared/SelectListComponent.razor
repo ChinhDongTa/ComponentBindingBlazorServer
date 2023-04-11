@@ -1,0 +1,42 @@
+﻿<h3>SelectListComponent</h3>
+<div class="row">
+    <select @onchange="OnOutIdChanged">
+        @foreach(var item in Items)
+        {
+            <option value="@item.Id">@item.Value</option>
+        }
+    </select>
+    <label class="text-info">Componentselected Id : @selectId</label>
+    
+</div>
+@code {
+    int id;
+    [Parameter]
+    public int OutId{ get => id;
+        set
+        {
+            if(id == value) return;
+            id = value;
+            OutIdChanged.InvokeAsync(value);
+        }
+    }
+    [Parameter]
+    public EventCallback< int> OutIdChanged{ get; set; }
+    string selectId;
+    IEnumerable<SeleclListItem>? Items = null;
+
+    protected override  void OnInitialized()
+    {
+        Items = new SeleclListItem[] { new SeleclListItem (  1,  "one" )
+        , new SeleclListItem (  2,  "two" ),
+         new SeleclListItem (  3,  "three" ),
+          new SeleclListItem (  4,  "four" )
+    };
+    }
+    void OnOutIdChanged(ChangeEventArgs e)
+    {
+        selectId = e.Value.ToString();
+        OutId = int.Parse(e.Value.ToString());
+    }
+    record SeleclListItem (int Id, string Value);
+}

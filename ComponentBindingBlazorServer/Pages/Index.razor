@@ -1,0 +1,24 @@
+﻿@page "/"
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+@*<SurveyPrompt @bind-BindingValue="mes" />*@
+
+<SelectListComponent @bind-OutId="outId" />
+<label>bindding :@outId</label>
+<label>@mes</label>
+<button @onclick="@click" class="btn-primary" >change</button>
+@code {
+    int outId ;
+    string mes="empty";
+    void click()
+    {
+        mes = $"Changed outId: {outId}";
+        StateHasChanged();
+    }
+   
+}
